@@ -35,7 +35,7 @@ class Deise_Dynamic_Slide_BG_Widget extends \Elementor\Widget_Base {
 			'info',
 			[
 				'type'            => \Elementor\Controls_Manager::RAW_HTML,
-				'raw'             => 'This widget reads the <strong>slide_background</strong> ACF field on the current page and injects a <code>.swiper-slide-bg { background-image }</code> CSS rule. The Elementor Slide object doesn\'t allow the image to be set dynamically.',
+				'raw'             => 'This widget reads the <strong>slide_background</strong> ACF field on the current page or term (e.g. product category) and injects a <code>.swiper-slide-bg { background-image }</code> CSS rule. The Elementor Slide object doesn\'t allow the image to be set dynamically.',
 				'content_classes' => 'elementor-descriptor',
 			]
 		);
@@ -44,13 +44,18 @@ class Deise_Dynamic_Slide_BG_Widget extends \Elementor\Widget_Base {
 	}
 
 	protected function render() {
-		$post_id = get_the_ID();
-
 		if ( ! function_exists( 'get_field' ) ) {
 			return;
 		}
 
-		$image_url = get_field( 'slide_background', $post_id );
+		$queried = get_queried_object();
+		if ( $queried instanceof \WP_Term ) {
+			$acf_id = 'term_' . $queried->term_id;
+		} else {
+			$acf_id = get_the_ID();
+		}
+
+		$image_url = get_field( 'slide_background', $acf_id );
 
 		// ACF image fields can return an array or a URL depending on the return format.
 		if ( is_array( $image_url ) ) {
