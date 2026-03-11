@@ -3,7 +3,7 @@
  * Plugin Name: Deise Dynamic Slide Background Style
  * Description: An Elementor widget that injects a CSS background-image from an ACF field into .swiper-slide-bg.
  * Version: 1.0.0
- * Author: Deise
+ * Author: Martin Whelan
  * Text Domain: deise-dynamic-slide-bg
  */
 
