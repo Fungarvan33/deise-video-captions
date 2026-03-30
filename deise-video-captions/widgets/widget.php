@@ -573,6 +573,34 @@ class Deise_Video_Captions_Widget extends \Elementor\Widget_Base {
 		$this->end_controls_section();
 	}
 
+	private function seconds_to_vtt_time( $seconds ) {
+		$seconds = max( 0, (float) $seconds );
+		$h       = (int) floor( $seconds / 3600 );
+		$m       = (int) floor( ( $seconds % 3600 ) / 60 );
+		$s       = (int) floor( $seconds % 60 );
+		$ms      = (int) round( ( $seconds - floor( $seconds ) ) * 1000 );
+		return sprintf( '%02d:%02d:%02d.%03d', $h, $m, $s, $ms );
+	}
+
+	private function generate_webvtt_data_uri( array $captions ) {
+		$vtt = "WEBVTT\n\n";
+		$cue = 1;
+		foreach ( $captions as $caption ) {
+			$start = isset( $caption['start_time'] ) ? (float) $caption['start_time'] : 0;
+			$end   = isset( $caption['end_time'] )   ? (float) $caption['end_time']   : 0;
+			$text  = wp_strip_all_tags( $caption['caption_content'] ?? '' );
+			$text  = trim( $text );
+			if ( '' === $text ) {
+				continue;
+			}
+			$vtt .= $cue . "\n";
+			$vtt .= $this->seconds_to_vtt_time( $start ) . ' --> ' . $this->seconds_to_vtt_time( $end ) . "\n";
+			$vtt .= $text . "\n\n";
+			++$cue;
+		}
+		return 'data:text/vtt;base64,' . base64_encode( $vtt );
+	}
+
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		$video_url       = ! empty( $settings['video_file']['url'] ) ? $settings['video_file']['url'] : '';
@@ -608,6 +636,14 @@ class Deise_Video_Captions_Widget extends \Elementor\Widget_Base {
 						<?php echo $poster_url ? 'poster="' . esc_url( $poster_url ) . '"' : ''; ?>
 					>
 						<source src="<?php echo esc_url( $video_url ); ?>" type="video/mp4">
+					<?php if ( ! empty( $captions ) ) : ?>
+						<track
+							kind="captions"
+							src="<?php echo esc_attr( $this->generate_webvtt_data_uri( $captions ) ); ?>"
+							srclang="en"
+							label="<?php esc_attr_e( 'Captions', 'deise-video-captions' ); ?>"
+						>
+					<?php endif; ?>
 					</video>
 				<?php elseif ( $poster_url ) : ?>
 					<div class="deise-video-captions__poster-fallback" style="background-image:url('<?php echo esc_url( $poster_url ); ?>');"></div>
