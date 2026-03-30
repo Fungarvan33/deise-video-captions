@@ -1,0 +1,124 @@
+.deise-video-captions {
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	min-height: 200px;
+	background: #111;
+}
+
+.deise-video-captions__media,
+.deise-video-captions__overlay {
+	position: absolute;
+	inset: 0;
+}
+
+.deise-video-captions__video,
+.deise-video-captions__poster-fallback {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	display: block;
+}
+
+.deise-video-captions__placeholder {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+	color: #fff;
+	text-align: center;
+	background: linear-gradient(135deg, #222, #444);
+}
+
+.deise-video-captions__overlay {
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+	padding: 32px;
+	pointer-events: none;
+	z-index: 2;
+}
+
+/* Captions are hidden by default; JS sets transform/opacity inline. */
+.deise-video-captions__caption {
+	display: none;
+	opacity: 0;
+	will-change: transform, opacity;
+	pointer-events: none;
+	max-width: 700px;
+	width: 100%;
+	transition-property: opacity, transform;
+	transition-timing-function: ease;
+}
+
+.deise-video-captions__caption.is-active {
+	display: block;
+}
+
+.deise-video-captions__caption-inner > *:first-child {
+	margin-top: 0;
+}
+
+.deise-video-captions__caption-inner > *:last-child {
+	margin-bottom: 0;
+}
+
+/* ── Audio toggle button ───────────────────────────────────────────────────── */
+
+.deise-video-captions__audio-btn {
+	position: absolute;
+	bottom: 16px;
+	right: 16px;
+	z-index: 3;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 8px;
+	border: none;
+	border-radius: 50%;
+	background: rgba(0, 0, 0, 0.5);
+	color: #fff;
+	cursor: pointer;
+	opacity: 0.8;
+	transition: opacity 0.2s ease;
+	pointer-events: auto;
+	line-height: 0;
+}
+
+.deise-video-captions__audio-btn:hover {
+	opacity: 1;
+}
+
+.deise-video-captions__audio-btn:focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 2px;
+}
+
+.deise-video-captions__audio-icon {
+	display: block;
+	width: 24px;
+	height: 24px;
+}
+
+/* Default (unmuted): show speaker-on, hide speaker-off */
+.deise-video-captions__audio-btn .deise-video-captions__audio-icon--muted {
+	display: none;
+}
+
+.deise-video-captions__audio-btn .deise-video-captions__audio-icon--unmuted {
+	display: block;
+}
+
+/* Muted state: swap icons */
+.deise-video-captions__audio-btn.is-muted .deise-video-captions__audio-icon--muted {
+	display: block;
+}
+
+.deise-video-captions__audio-btn.is-muted .deise-video-captions__audio-icon--unmuted {
+	display: none;
+}
