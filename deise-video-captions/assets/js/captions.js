@@ -15,6 +15,12 @@
 			$widget.data('dvc-init', true);
 
 			var $video    = $widget.find('.deise-video-captions__video').first();
+
+			// Swap to the mobile poster before the browser loads the video.
+			var mobilePoster = $video.attr('data-mobile-poster');
+			if (mobilePoster && window.innerWidth < 768) {
+				$video[0].poster = mobilePoster;
+			}
 			var $captions = $widget.find('.deise-video-captions__caption');
 			var settings  = $widget.data('settings') || {};
 			var speed     = parseInt(settings.transitionSpeed || 600, 10);

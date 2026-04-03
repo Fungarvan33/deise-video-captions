@@ -56,6 +56,15 @@ class Deise_Video_Captions_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'mobile_poster_image',
+			array(
+				'label'       => esc_html__( 'Mobile Poster Image', 'deise-video-captions' ),
+				'type'        => \Elementor\Controls_Manager::MEDIA,
+				'description' => esc_html__( 'Optional. Replaces the poster on screens narrower than 768 px (e.g. a portrait-cropped version).', 'deise-video-captions' ),
+			)
+		);
+
+		$this->add_control(
 			'playback_note',
 			array(
 				'type'            => \Elementor\Controls_Manager::RAW_HTML,
@@ -603,8 +612,9 @@ class Deise_Video_Captions_Widget extends \Elementor\Widget_Base {
 
 	protected function render() {
 		$settings = $this->get_settings_for_display();
-		$video_url       = ! empty( $settings['video_file']['url'] ) ? $settings['video_file']['url'] : '';
-		$poster_url      = ! empty( $settings['poster_image']['url'] ) ? $settings['poster_image']['url'] : '';
+		$video_url          = ! empty( $settings['video_file']['url'] ) ? $settings['video_file']['url'] : '';
+		$poster_url         = ! empty( $settings['poster_image']['url'] ) ? $settings['poster_image']['url'] : '';
+		$mobile_poster_url  = ! empty( $settings['mobile_poster_image']['url'] ) ? $settings['mobile_poster_image']['url'] : '';
 		$captions        = ! empty( $settings['captions'] ) ? $settings['captions'] : array();
 		$is_editor       = \Elementor\Plugin::$instance->editor->is_edit_mode();
 		$show_audio_icon = ! empty( $settings['show_audio_icon'] ) && 'yes' === $settings['show_audio_icon'];
@@ -634,6 +644,7 @@ class Deise_Video_Captions_Widget extends \Elementor\Widget_Base {
 						<?php echo ( 'yes' === $settings['playsinline'] ) ? 'playsinline' : ''; ?>
 						preload="metadata"
 						<?php echo $poster_url ? 'poster="' . esc_url( $poster_url ) . '"' : ''; ?>
+						<?php echo $mobile_poster_url ? 'data-mobile-poster="' . esc_url( $mobile_poster_url ) . '"' : ''; ?>
 					>
 						<source src="<?php echo esc_url( $video_url ); ?>" type="video/mp4">
 					<?php if ( ! empty( $captions ) ) : ?>
