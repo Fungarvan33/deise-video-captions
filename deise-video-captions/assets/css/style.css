@@ -23,6 +23,31 @@
 	display: block;
 }
 
+.deise-video-captions__video {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+}
+
+.deise-video-captions__poster-wrap {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.deise-video-captions__poster-wrap picture {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.deise-video-captions__poster {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
 .deise-video-captions__placeholder {
 	position: absolute;
 	inset: 0;
