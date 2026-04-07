@@ -627,18 +627,14 @@ class Deise_Video_Captions_Widget extends \Elementor\Widget_Base {
 			<div class="deise-video-captions__media">
 				<?php if ( $video_url ) : ?>
 					<?php if ( $poster_url ) : ?>
-						<div class="deise-video-captions__poster-wrap">
-							<picture>
-								<img
-									class="deise-video-captions__poster"
-									src="<?php echo esc_url( $poster_url ); ?>"
-									alt=""
-									aria-hidden="true"
-									fetchpriority="high"
-									loading="eager"
-								>
-							</picture>
-						</div>
+						<img
+							class="deise-video-captions__poster"
+							src="<?php echo esc_url( $poster_url ); ?>"
+							alt=""
+							aria-hidden="true"
+							fetchpriority="high"
+							loading="eager"
+						>
 					<?php endif; ?>
 					<video
 						class="deise-video-captions__video"
