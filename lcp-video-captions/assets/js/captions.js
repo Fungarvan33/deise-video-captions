@@ -2,8 +2,8 @@
 	'use strict';
 
 	function initVideoCaptions($scope) {
-		var $widgets = $scope.find('.deise-video-captions');
-		if (!$widgets.length && $scope.hasClass('deise-video-captions')) {
+		var $widgets = $scope.find('.lcp-video-captions');
+		if (!$widgets.length && $scope.hasClass('lcp-video-captions')) {
 			$widgets = $scope;
 		}
 
@@ -14,8 +14,8 @@
 			}
 			$widget.data('dvc-init', true);
 
-			var $video    = $widget.find('.deise-video-captions__video').first();
-			var $captions = $widget.find('.deise-video-captions__caption');
+			var $video    = $widget.find('.lcp-video-captions__video').first();
+			var $captions = $widget.find('.lcp-video-captions__caption');
 			var settings  = $widget.data('settings') || {};
 			var speed     = parseInt(settings.transitionSpeed || 600, 10);
 			var entryAnim = settings.entryAnimation || 'fly-up';
@@ -121,6 +121,20 @@
 				});
 			}
 
+			// Fade out the poster image once the video begins playing.
+			var $poster = $widget.find('.lcp-video-captions__poster');
+			if ($poster.length && $video.length) {
+				var vid = $video[0];
+				function hidePoster() {
+					$poster.addClass('is-hidden');
+				}
+				if (!vid.paused || vid.currentTime > 0) {
+					hidePoster();
+				} else {
+					$video.one('playing', hidePoster);
+				}
+			}
+
 			if ($video.length) {
 				$video.on('timeupdate', function(){
 					updateCaptions(this.currentTime || 0);
@@ -132,7 +146,7 @@
 			}
 
 			// Audio toggle icon
-			var $audioBtn = $widget.find('.deise-video-captions__audio-btn');
+			var $audioBtn = $widget.find('.lcp-video-captions__audio-btn');
 			if ($audioBtn.length && $video.length) {
 				function syncAudioIcon() {
 					if ($video[0].muted) {
@@ -153,7 +167,7 @@
 	}
 
 	$(window).on('elementor/frontend/init', function() {
-		elementorFrontend.hooks.addAction('frontend/element_ready/deise_video_captions.default', initVideoCaptions);
+		elementorFrontend.hooks.addAction('frontend/element_ready/lcp_video_captions.default', initVideoCaptions);
 	});
 
 	$(function(){

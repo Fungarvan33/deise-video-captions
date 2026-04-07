@@ -1,4 +1,4 @@
-.deise-video-captions {
+.lcp-video-captions {
 	position: relative;
 	overflow: hidden;
 	width: 100%;
@@ -6,24 +6,45 @@
 	background: #111;
 }
 
-.deise-video-captions__media,
-.deise-video-captions__overlay {
+.lcp-video-captions__media,
+.lcp-video-captions__overlay {
 	position: absolute;
 	inset: 0;
 }
 
-.deise-video-captions__video,
-.deise-video-captions__poster-fallback {
+.lcp-video-captions__video {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
 	display: block;
 }
 
-.deise-video-captions__placeholder {
+.lcp-video-captions__poster {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	display: block;
+	z-index: 1;
+	transition: opacity 0.4s ease;
+}
+
+/* Handles both standalone <img> and <picture> > <img> */
+.lcp-video-captions__poster img,
+img.lcp-video-captions__poster {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	display: block;
+}
+
+.lcp-video-captions__poster.is-hidden {
+	opacity: 0;
+	pointer-events: none;
+}
+
+.lcp-video-captions__placeholder {
 	position: absolute;
 	inset: 0;
 	display: flex;
@@ -35,7 +56,7 @@
 	background: linear-gradient(135deg, #222, #444);
 }
 
-.deise-video-captions__overlay {
+.lcp-video-captions__overlay {
 	display: flex;
 	justify-content: center;
 	align-items: flex-end;
@@ -45,7 +66,7 @@
 }
 
 /* Captions are hidden by default; JS sets transform/opacity inline. */
-.deise-video-captions__caption {
+.lcp-video-captions__caption {
 	display: none;
 	opacity: 0;
 	will-change: transform, opacity;
@@ -56,21 +77,21 @@
 	transition-timing-function: ease;
 }
 
-.deise-video-captions__caption.is-active {
+.lcp-video-captions__caption.is-active {
 	display: block;
 }
 
-.deise-video-captions__caption-inner > *:first-child {
+.lcp-video-captions__caption-inner > *:first-child {
 	margin-top: 0;
 }
 
-.deise-video-captions__caption-inner > *:last-child {
+.lcp-video-captions__caption-inner > *:last-child {
 	margin-bottom: 0;
 }
 
 /* ── Audio toggle button ───────────────────────────────────────────────────── */
 
-.deise-video-captions__audio-btn {
+.lcp-video-captions__audio-btn {
 	position: absolute;
 	bottom: 16px;
 	right: 16px;
@@ -90,35 +111,35 @@
 	line-height: 0;
 }
 
-.deise-video-captions__audio-btn:hover {
+.lcp-video-captions__audio-btn:hover {
 	opacity: 1;
 }
 
-.deise-video-captions__audio-btn:focus-visible {
+.lcp-video-captions__audio-btn:focus-visible {
 	outline: 2px solid #fff;
 	outline-offset: 2px;
 }
 
-.deise-video-captions__audio-icon {
+.lcp-video-captions__audio-icon {
 	display: block;
 	width: 24px;
 	height: 24px;
 }
 
 /* Default (unmuted): show speaker-on, hide speaker-off */
-.deise-video-captions__audio-btn .deise-video-captions__audio-icon--muted {
+.lcp-video-captions__audio-btn .lcp-video-captions__audio-icon--muted {
 	display: none;
 }
 
-.deise-video-captions__audio-btn .deise-video-captions__audio-icon--unmuted {
+.lcp-video-captions__audio-btn .lcp-video-captions__audio-icon--unmuted {
 	display: block;
 }
 
 /* Muted state: swap icons */
-.deise-video-captions__audio-btn.is-muted .deise-video-captions__audio-icon--muted {
+.lcp-video-captions__audio-btn.is-muted .lcp-video-captions__audio-icon--muted {
 	display: block;
 }
 
-.deise-video-captions__audio-btn.is-muted .deise-video-captions__audio-icon--unmuted {
+.lcp-video-captions__audio-btn.is-muted .lcp-video-captions__audio-icon--unmuted {
 	display: none;
 }
