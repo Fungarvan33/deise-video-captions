@@ -635,6 +635,7 @@ class Deise_Video_Captions_Widget extends \Elementor\Widget_Base {
 									alt=""
 									aria-hidden="true"
 									fetchpriority="high"
+									loading="eager"
 								>
 							</picture>
 						</div>
